@@ -1,15 +1,21 @@
 
+'''Meg lehet változtatni a hajók hosszát, illetve ezáltal a számukat. Alapértelmezetten 1-5 hosszú hajók vannak.'''
+SHIPLENGTH_LOWER_BOUND = 1
+SHIPLENGTH_UPPER_BOUND = 6
 
 class Ship:
 
 	'''Adattagok:
 		length: hajó hossza
-		range: hajót tartalmazó cellák, ha
+		range: hajót tartalmazó cellák listája, eleinte üres, a játékos tölti fel a Player osztályon keresztül
 	'''
 	
 	def __init__(self, leng):
 		__length = leng
 		__range = []
+	
+	def __del__(self):
+		print("A(z) " + __length + ". számú hajó elsüllyedt!")
 	
 	def getLength():
 		return __length
@@ -19,3 +25,6 @@ class Ship:
 	
 	def setRange(r):
 		__range = r
+	
+	def removeFromRange(cell):
+		__range.remove(cell)
