@@ -1,7 +1,6 @@
 '''Képernyő törlése'''
 
-import player
-import ship
+from player import *
 
 import os
 
@@ -13,11 +12,12 @@ def setUpPlayers(player):
 	
 	name = input("Üdvözöllek a játékban! A neved: ")
 	player = Player(name)
-	char = input("Szeretnéd, ha véletlenszerűen lennének elhelyezve a hajóid? (I/N): ")
-	setUpPlayerShips(player, (char == "I"))
+	mychoice = (input("Szeretnéd, ha véletlenszerűen lennének elhelyezve a hajóid? (I/N): ") == "I")
+	player = setUpPlayerShips(player, mychoice)
 	
 	input("(A folytatáshoz nyomj meg egy billentyűt...)")
 	clearScreen()
+	return player
 
 
 '''Hajók felállítása'''
@@ -27,16 +27,17 @@ def setUpPlayerShips(player, random):
 		head = ""
 		hori = False
 		
-		while !player.setShipLocation(tmpship, head, hori):
+		while 1:
 			if random:
-				ltr_r = choice(ABC)
-				num_r = choice(range(BOARD_LOWER_BOUND,BOARD_UPPER_BOUND))
-				hori = choice([True, False])
+				head = random.choice(ABC) + str(random.choice(range(BOARD_LOWER_BOUND,BOARD_UPPER_BOUND)))
+				hori = random.choice([True, False])
 			else:
-				head = input("A(z) " + length + " hosszú hajó helye: ")
-				hori = input()
+				head = input("A(z) " + str(length) + " hosszú hajó helye: ").upper()
+				hori = (input("Vízszintes (V) vagy függőleges (F) a hajó? : ") == "V")
+			if player.setShipLocation(tmpship, head, hori): break
 	
 	player.printShips()
+	return player
 
 
 def makeTurn(turn_player, enemy_player):
@@ -47,11 +48,11 @@ def makeTurn(turn_player, enemy_player):
 	
 	'''Input: cella'''
 	cell = ""
-	while !enemy_player.checkForHit(cell):
-		cell = input("Írd be azt a cellát, amire lősz: ")
+	while 1:
+		cell = input("Írd be azt a cellát, amire lősz: ").upper()
+		if enemy_player.checkForHit(cell): break
 	
-	if enemy_player.checkEndCondition():
-		return turn_player
+	if enemy_player.checkEndCondition(): return turn_player
 	
 	input("(A folytatáshoz nyomj meg egy billentyűt...)")
 	

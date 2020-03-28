@@ -11,26 +11,26 @@ class Ship:
 	'''
 	
 	def __init__(self, leng):
-		__length = leng
-		__range = []
+		self.__length = leng
+		self.__range = []
 	
 	def __del__(self):
-		print("A(z) " + __length + ". számú hajó elsüllyedt!")
+		print("A(z) " + str(self.__length) + ". számú hajó elsüllyedt!")
 	
-	def getLength():
-		return __length
+	def getLength(self):
+		return self.__length
 	
-	def getRange():
-		return __range
+	def getRange(self):
+		return self.__range
 	
-	def setRange(r):
-		__range = r
+	def setRange(self, r):
+		self.__range = r
 	
-	def removeFromRange(cell):
-		__range.remove(cell)
+	def removeFromRange(self, cell):
+		self.__range.remove(cell)
 	
-	def printRange():
+	def printRange(self):
 		str = ""
-		for x in __range:
+		for x in self.__range:
 			str += x + "  "
 		print(str)

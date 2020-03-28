@@ -1,6 +1,5 @@
-'''#!/usr/bin/env python3'''
 
-import gamemanager
+from gamemanager import *
 
 from random import choice
 
@@ -15,12 +14,13 @@ red_player = None
 blue_player = None
 
 print("----   1. JÁTÉKOS   ----")
-setUpPlayers(red_player)
+red_player = setUpPlayers(red_player)
 
 print("----   2. JÁTÉKOS   ----")
-setUpPlayers(blue_player)
+blue_player = setUpPlayers(blue_player)
 
-winner = None '''Lehetetlen hogy döntetlen legyen de hibakeresés céljából most az lesz.'''
+winner = None
+'''Lehetetlen hogy döntetlen legyen de hibakeresés céljából most az lesz.'''
 
 print("----   JÁTÉK INDUL   ----")
 
@@ -42,9 +42,9 @@ while 1:
 
 '''VÉGE'''
 
-clearScreen()
+#clearScreen()
 
 print("----   JÁTÉK VÉGE   ----")
-	'''TODO konzol grafika'''
+'''TODO konzol grafika'''
 print("A nyertes: " + winner.getName())
 
