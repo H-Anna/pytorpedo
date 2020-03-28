@@ -9,23 +9,43 @@ ABC = ascii_uppercase[BOARD_LOWER_BOUND:BOARD_UPPER_BOUND]
 
 class Player:
 	'''Adattagok:
-	board = {} 	dictionary ; Kulcs: A-J, érték: lista 0-9, ha egy mezőre már lőttek, akkor azt ki kell venni a listából
-	ships = [] 	list ; 5 db hajó. Ha egy hajó elsüllyed, kiveszi a listából. Ha üres a lista, vége a játéknak.
+	__board = {} 	dictionary ; Kulcs: A-J, érték: lista 0-9. Azokat a mezőket tárolja, amelyekre még lehet lőni
+	__ships = [] 	list ; 5 db hajó. Ha egy hajó elsüllyed, kiveszi a listából. Ha üres a lista, vége a játéknak.
 	'''
 	
+	'''Ellenőrzi, létezik-e ez a cella'''
+	def isCellInputCorrect(cell):
+		return (cell[0] in ABC) and (int(cell[1:]) in range(BOARD_LOWER_BOUND, BOARD_UPPER_BOUND))
+
+	
 	def __init__(self, name):
-		self.name = name
-		board = {}
-		ships = []
+		__name = name
+		__board = {}
+		__ships = []
 		for letter in list(ABC):
-			board[letter] = []				'''Új oszlopot hoz létre'''
+			__board[letter] = []				'''Új oszlopot hoz létre'''
 			for n in range(BOARD_LOWER_BOUND,BOARD_UPPER_BOUND):
-				board[letter].append(n)		'''Új sort hoz létre'''
+				__board[letter].append(n)		'''Új sort hoz létre'''
+	
+	
+	def getName():
+		return __name
+	
+	def getShips():
+		return __ships
+	
+	def printShips():
+		print("A hajók helyzete:")
+		for x in __ships:
+			x.printRange()
+	
+	def getBoard():
+		return __board
 	
 	
 	def addShip(length):
 		newship = Ship(length)
-		ships.append(newship)
+		__ships.append(newship)
 		return newship
 	
 	
@@ -44,13 +64,17 @@ class Player:
 	
 	'''Megnézi, hogy van-e az adott cellán hajó, ha igen, visszatér vele'''
 	def checkCellForShip(cell):
-		for s in ships:
+		for s in __ships:
 			if cell in s.getRange():
 				return s
 		return None
 	
 	
-	def setShipLocation(ship, head, horizontal = False):
+	def setShipLocation(ship, head, horizontal = False, omit_print = False):
+		if !isCellInputCorrect(head):
+			print("Hiba: Nem megfelelő input")
+			return False
+	
 		temp = [] '''A hajó celláit tartalmazó lista'''
 	
 		ltr = head[0] '''A betű'''
@@ -82,41 +106,41 @@ class Player:
 		
 		'''Ha igen, akkor nem lehet oda letenni új hajót.'''
 		if anothership:
-			print("!! A cellák valamelyikében már van hajó, próbált újra.")
+			if !omit_print print("!! A cellák valamelyikében már van hajó, próbált újra.")
 		else:
 			ship.setRange(temp)		'''Cellák beállítása'''
+			
 		return !anothership 		'''Ha van másik hajó -> a hajó elhelyezése sikertelen (return False)'''
 	
 	
-'''
-	def getShipWithLength(length):
-		for s in ships:
-			if s.getLength == length:
-				return s
-		return null
-'''
-	
 	'''Megjelöli az adott cellát, tehát kiveszi a lehetséges cellák közül'''
 	def markCellOnBoard(cell):
-		board[cell[0]].remove(int(cell[1:]))
+		__board[cell[0]].remove(int(cell[1:]))
 	
 	
 	'''Meg van-e jelölve már az adott cella?'''
 	def isCellUnmarkedOnBoard(cell):
-		return (int(cell[1:]) in board[cell[0]])
+		return (int(cell[1:]) in __board[cell[0]])
 	
 	
 	'''Ha nincs több hajó a listában, akkor vége a játéknak'''
 	def checkEndCondition():
-		if len(ships) == 0:
-			print("JÁTÉK VÉGE - A(z) " + name + " nevű játékos elsüllyedt.")
+		if len(__ships) == 0:
+			print("A(z) " + __name + " nevű játékos elsüllyedt.")
+			return True
 		else:
-			print(name + " játékosnak " + len(ships) + " hajója van még vízen.")
+			print(__name + " játékosnak " + len(__ships) + " hajója van még vízen.")
+			return False
 
 	
 	'''Megvizsgálja a torpedózott cellát'''
 	def checkForHit(cell):
-		if isCellUnmarkedOnBoard(cell):
+		
+		if !isCellInputCorrect(cell):
+			print("Hiba: Nem megfelelő input")
+			return False
+
+		if isCellUnmarkedOnBoard(cell): '''Ha erre a cellára még nem lőttek'''
 			markCellOnBoard(cell)
 			s = checkCellForShip(cell)
 			if s == None:
@@ -125,6 +149,10 @@ class Player:
 				s.removeFromRange(cell)
 				print("Talált!")
 				if len(s.getRange()) == 0:
-					ships.remove(s)
+					__ships.remove(s)
 					del s
-					checkEndCondition()
+					'''checkEndCondition()'''
+			return True
+		else:						'''Ha erre a cellára már lőttek'''
+			print("Ez a cella már ismert.")
+			return False

@@ -1,28 +1,50 @@
 '''#!/usr/bin/env python3'''
 
-from player import *
-from ship import *
+import gamemanager
 
-print("****Új játék****")
-
-
-'''Ellenőrzi, létezik-e ez a cella'''
-def isCellInputCorrect(cell):
-	return (cell[0] in ABC) and (int(cell[1:]) in range(BOARD_LOWER_BOUND, BOARD_UPPER_BOUND))
+from random import choice
 
 
-def setUpPlayerShips(player, random):
-	for length in range(1,6):
-		if random:
-			
-			'''Random input'''
-		else:
-		tmpship = player.addShip(length)
-		head = ""
-		while (head == "") or (isCellInputCorrect(head) and !player.setShipLocation(head)):	'''Egyelőre feltételezzük hogy az input megfelelő'''
-			head = input("A(z) " + length + " hosszú hajó helye: ")
+'''ÚJ JÁTÉK'''
+
+clearScreen()
+
+print("----   ÚJ JÁTÉK   ----")
+
+red_player = None
+blue_player = None
+
+print("----   1. JÁTÉKOS   ----")
+setUpPlayers(red_player)
+
+print("----   2. JÁTÉKOS   ----")
+setUpPlayers(blue_player)
+
+winner = None '''Lehetetlen hogy döntetlen legyen de hibakeresés céljából most az lesz.'''
+
+print("----   JÁTÉK INDUL   ----")
+
+print("Kellemes időtöltést!")
+input("(A folytatáshoz nyomj meg egy billentyűt...)")
 
 
-red_player = Player(input("Üdvözöllek a játékban! A neved: "))
-char = input("Szeretnéd, ha véletlenszerűen lennének elhelyezve a hajóid? (I/N): ")
-setUpPlayerShips(red_player, (char == "I"))
+'''KÖRÖK'''
+while 1:
+
+	'''TODO konzol grafika'''
+	winner = makeTurn(red_player, blue_player)
+	if winner != None: break
+	
+	'''TODO konzol grafika'''
+	winner = makeTurn(blue_player, red_player)
+	if winner != None: break
+
+
+'''VÉGE'''
+
+clearScreen()
+
+print("----   JÁTÉK VÉGE   ----")
+	'''TODO konzol grafika'''
+print("A nyertes: " + winner.getName())
+

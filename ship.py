@@ -28,3 +28,9 @@ class Ship:
 	
 	def removeFromRange(cell):
 		__range.remove(cell)
+	
+	def printRange():
+		str = ""
+		for x in __range:
+			str += x + "  "
+		print(str)
