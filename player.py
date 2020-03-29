@@ -8,6 +8,7 @@ from string import ascii_uppercase
 
 BOARD_UPPER_BOUND = 10
 BOARD_LOWER_BOUND = 0
+BOARDRANGE = range(BOARD_LOWER_BOUND,BOARD_UPPER_BOUND)
 
 ABC = ascii_uppercase[BOARD_LOWER_BOUND:BOARD_UPPER_BOUND]
 
@@ -21,7 +22,7 @@ class Player:
 	'''Ellenőrzi, létezik-e ez a cella'''
 	def isCellInputCorrect(self, cell):
 		if cell == "Q" or cell == "QUIT": sys.exit()
-		return (cell[0] in ABC) and (int(cell[1:]) in range(BOARD_LOWER_BOUND, BOARD_UPPER_BOUND))
+		return (cell[0] in ABC) and (int(cell[1:]) in BOARDRANGE)
 
 	
 	def __init__(self, name):
@@ -31,7 +32,7 @@ class Player:
 		for letter in list(ABC):
 			'''Új oszlopot hoz létre'''
 			self.__board[letter] = []
-			for n in range(BOARD_LOWER_BOUND,BOARD_UPPER_BOUND):
+			for n in BOARDRANGE:
 				'''Új sort hoz létre'''
 				self.__board[letter].append(n)
 	

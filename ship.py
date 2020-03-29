@@ -13,6 +13,7 @@ class Ship:
 	def __init__(self, leng):
 		self.__length = leng
 		self.__range = []
+		self.__unrange = []	#konzolos megjelenítéshez
 	
 	def sinking(self):
 		print("A(z) " + str(self.__length) + ". számú hajó elsüllyedt!")
@@ -23,11 +24,15 @@ class Ship:
 	def getRange(self):
 		return self.__range
 	
+	def getUnrange(self): #konzolos megjelenítéshez
+		return self.__unrange
+	
 	def setRange(self, r):
 		self.__range = r
 	
 	def removeFromRange(self, cell):
 		self.__range.remove(cell)
+		self.__unrange.append(cell)
 	
 	def printRange(self):
 		str = ""

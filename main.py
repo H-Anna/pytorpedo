@@ -28,18 +28,24 @@ input("(A folytatáshoz nyomj meg egy billentyűt...)")
 '''KÖRÖK'''
 while 1:
 
-	'''TODO konzol grafika'''
+	clearScreen()
+	printBoard(blue_player, True)
+	printBoard(red_player, False)
+	printLegend()
 	winner = makeTurn(red_player, blue_player)
 	if winner != None: break
 	
-	'''TODO konzol grafika'''
+	clearScreen()
+	printBoard(red_player, True)
+	printBoard(blue_player, False)
+	printLegend()
 	winner = makeTurn(blue_player, red_player)
 	if winner != None: break
 
 
 '''VÉGE'''
 
-#clearScreen()
+clearScreen()
 
 print("----   JÁTÉK VÉGE   ----")
 '''TODO konzol grafika'''
