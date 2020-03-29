@@ -1,6 +1,8 @@
 
 from ship import *
 
+
+import sys
 '''A-J betűkhöz'''
 from string import ascii_uppercase
 
@@ -18,6 +20,7 @@ class Player:
 	
 	'''Ellenőrzi, létezik-e ez a cella'''
 	def isCellInputCorrect(self, cell):
+		if cell == "Q" or cell == "QUIT": sys.exit()
 		return (cell[0] in ABC) and (int(cell[1:]) in range(BOARD_LOWER_BOUND, BOARD_UPPER_BOUND))
 
 	
@@ -135,7 +138,7 @@ class Player:
 	
 
 	'''Ha nincs több hajó a listában, akkor vége a játéknak'''
-	def checkEndCondition():
+	def checkEndCondition(self):
 		if len(self.__ships) == 0:
 			print("A(z) " + self.__name + " nevű játékos elsüllyedt.")
 			return True
@@ -161,6 +164,7 @@ class Player:
 				s.removeFromRange(cell)
 				print("Talált!")
 				if len(s.getRange()) == 0:
+					s.sinking()
 					self.__ships.remove(s)
 					del s
 			

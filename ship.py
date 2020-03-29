@@ -14,7 +14,7 @@ class Ship:
 		self.__length = leng
 		self.__range = []
 	
-	def __del__(self):
+	def sinking(self):
 		print("A(z) " + str(self.__length) + ". számú hajó elsüllyedt!")
 	
 	def getLength(self):

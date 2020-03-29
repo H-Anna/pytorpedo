@@ -2,6 +2,7 @@
 
 from player import *
 
+import random
 import os
 
 def clearScreen():
@@ -21,20 +22,20 @@ def setUpPlayers(player):
 
 
 '''Hajók felállítása'''
-def setUpPlayerShips(player, random):
+def setUpPlayerShips(player, rnd):
 	for length in range(1,6):
 		tmpship = player.addShip(length)
 		head = ""
 		hori = False
 		
 		while 1:
-			if random:
+			if rnd:
 				head = random.choice(ABC) + str(random.choice(range(BOARD_LOWER_BOUND,BOARD_UPPER_BOUND)))
 				hori = random.choice([True, False])
 			else:
 				head = input("A(z) " + str(length) + " hosszú hajó helye: ").upper()
 				hori = (input("Vízszintes (V) vagy függőleges (F) a hajó? : ") == "V")
-			if player.setShipLocation(tmpship, head, hori): break
+			if player.setShipLocation(tmpship, head, hori, rnd): break
 	
 	player.printShips()
 	return player

@@ -1,9 +1,6 @@
 
 from gamemanager import *
 
-from random import choice
-
-
 '''ÚJ JÁTÉK'''
 
 clearScreen()
