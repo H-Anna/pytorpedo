@@ -19,10 +19,10 @@ class Player:
 	__ships = [] 	list ; 5 db hajó. Ha egy hajó elsüllyed, kiveszi a listából. Ha üres a lista, vége a játéknak.
 	'''
 	
-	'''Ellenőrzi, létezik-e ez a cella'''
+	#Ellenőrzi, létezik-e ez a cella
 	def isCellInputCorrect(self, cell):
 		if cell == "Q" or cell == "QUIT": sys.exit()
-		return (cell[0] in ABC) and (int(cell[1:]) in BOARDRANGE)
+		return (not any(ltr in cell[1:] for ltr in ABC)) and (cell[0] in ABC) and (int(cell[1:]) in BOARDRANGE)
 
 	
 	def __init__(self, name):
@@ -30,10 +30,10 @@ class Player:
 		self.__board = {}
 		self.__ships = []
 		for letter in list(ABC):
-			'''Új oszlopot hoz létre'''
+			#Új oszlopot hoz létre
 			self.__board[letter] = []
 			for n in BOARDRANGE:
-				'''Új sort hoz létre'''
+				#Új sort hoz létre
 				self.__board[letter].append(n)
 	
 	
